@@ -19,6 +19,70 @@ Funktionen: Registrierung, Login, Erstellen, Lesen, Aktualisieren und Löschen v
 
 ---
 
+## 🧪 Projekt lokal testen
+
+### Voraussetzungen
+
+- Docker installiert und gestartet
+- Node.js installiert
+- Kein laufender MongoDB-Container auf Port 27017
+
+### 🛠️ Setup-Schritte
+
+1. **Datenbank-URL konfigurieren**  
+   Sicherstellen, dass `server/utils/config.ts` enthält:
+
+```ts
+   export const DB_URIMONGODB = "mongodb://localhost:27017/";
+```
+
+### MongoDB-Container starten
+
+Im Terminal ausführen:
+
+```bash
+   docker run -d -p 27017:27017 --name mongodb -v mongodb_volume:/data/db mongo:latest
+```
+
+### Backend-Server starten
+
+Im ``server``-Verzeichnis ausführen:
+
+```bash
+npm start
+```
+
+## 🐳 Projekt auf Docker testen
+
+**Voraussetzungen:**
+
+- Docker installiert
+- Ports 27017/4545 frei
+
+**Schritte:**
+
+1. `docker compose up` ausführen
+2. DB-URL in `server/utils/config.ts` prüfen
+
+**Hinweis:**
+
+- Backend unter localhost:4545 erreichbar
+- Logs bei Fehlern checken
+**Wichtig:**  
+In `server/utils/config.ts` muss folgende DB-URL stehen:
+
+```ts
+export const DB_URIMONGODB = "mongodb://mongodb:27017/test";
+```
+
+### #Container starten
+
+Im Terminal ausführen:
+
+```bash
+docker compose up --build
+```
+
 ## 🧠 Schritt 1: Modellierung
 
 ### 📌 Use-Case-Diagramm 
@@ -1274,70 +1338,6 @@ services:
 networks:
   app-network:
     driver: bridge
-```
-
-## 🧪 Projekt lokal testen
-
-### Voraussetzungen
-
-- Docker installiert und gestartet
-- Node.js installiert
-- Kein laufender MongoDB-Container auf Port 27017
-
-### 🛠️ Setup-Schritte
-
-1. **Datenbank-URL konfigurieren**  
-   Sicherstellen, dass `server/utils/config.ts` enthält:
-
-```ts
-   export const DB_URIMONGODB = "mongodb://localhost:27017/";
-```
-
-### MongoDB-Container starten
-
-Im Terminal ausführen:
-
-```bash
-   docker run -d -p 27017:27017 --name mongodb -v mongodb_volume:/data/db mongo:latest
-```
-
-### Backend-Server starten
-
-Im ``server``-Verzeichnis ausführen:
-
-```bash
-npm start
-```
-
-## 🐳 Projekt auf Docker testen
-
-**Voraussetzungen:**
-
-- Docker installiert
-- Ports 27017/4545 frei
-
-**Schritte:**
-
-1. `docker compose up` ausführen
-2. DB-URL in `server/utils/config.ts` prüfen
-
-**Hinweis:**
-
-- Backend unter localhost:4545 erreichbar
-- Logs bei Fehlern checken
-**Wichtig:**  
-In `server/utils/config.ts` muss folgende DB-URL stehen:
-
-```ts
-export const DB_URIMONGODB = "mongodb://mongodb:27017/test";
-```
-
-## #MongoDB-Container starten
-
-Im Terminal ausführen:
-
-```bash
-docker compose up --build
 ```
 
 ## 📚 Offizielle Dokumentationen & Nützliche Tools
