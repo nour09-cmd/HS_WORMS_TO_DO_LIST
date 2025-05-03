@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES6",
+      "moduleResolution": "node",
+      "outDir": "dist/src",
+      "esModuleInterop": true,
+      "sourceMap": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "useDefineForClassFields": false,
+      "incremental": true,
+      "skipLibCheck": true,
+      "declaration": false,
+      "removeComments": true,
+      "strictNullChecks": true,
+      "allowSyntheticDefaultImports": true,
+      "resolveJsonModule": true,
+      "baseUrl": "./",
+      "typeRoots": ["node_modules/@types"],
+      "types": ["jest", "node"]
+    },
+    "lib": ["es2015"],
+    "exclude": ["node_modules"]
+  }

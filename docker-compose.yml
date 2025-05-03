@@ -1,0 +1,19 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+  backend:
+    build: ./server
+    ports:
+      - "4545:4545"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
