@@ -1,4 +1,4 @@
-# 📝 TO-DO-LISTE Full-Stack-Projekt
+# 📝 TO-DO-LISTE
 
 Dieses Projekt zeigt, wie man eine einfache TO-DO-Liste als Full-Stack-Anwendung erstellt – von der Planung über die Backend- und Datenbank-Implementierung bis hin zum Einsatz von Docker.
 
