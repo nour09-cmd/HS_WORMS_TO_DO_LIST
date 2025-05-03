@@ -55,7 +55,9 @@ Funktionen: Registrierung, Login, Erstellen, Lesen, Aktualisieren und Löschen v
     ```bash
     http://localhost:27017/
     ```
-![alt text](./Diagramms/image3.png)
+
+![alt text](./Diagramms/image3.png),
+
 ### 📌 Implementiern sie interface classes
 
 #### 📁 Schritt 1: Ordnerstruktur erstellen
