@@ -21,11 +21,11 @@ Funktionen: Registrierung, Login, Erstellen, Lesen, Aktualisieren und Löschen v
 
 ## 🧠 Schritt 1: Modellierung
 
-### 📌 Use-Case-Diagramm der App/Website
+### 📌 Use-Case-Diagramm 
 
 ![Use Case Diagramm](./Diagramms/use_case.svg)
 
-### 📌 ER-Diagramm des Datenbankschemas
+### 📌 ER-Diagramm
 
 ![ER Diagramm](./Diagramms/ER.svg)
 
