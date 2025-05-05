@@ -83,7 +83,7 @@ Im Terminal ausführen:
 docker compose up --build
 ```
 
-## POSTMANN `TODO_LIST.postman_collection.json`
+## 🛠️ POSTMANN `TODO_LIST.postman_collection.json`
 
 1. Importiere die Datei `TODO_LIST.postman_collection.json`
 2. Erstelle folgende Variablen in Postman:
