@@ -83,6 +83,30 @@ Im Terminal ausführen:
 docker compose up --build
 ```
 
+## POSTMANN `TODO_LIST.postman_collection.json`
+
+1. Importiere die Datei `TODO_LIST.postman_collection.json`
+2. Erstelle folgende Variablen in Postman:
+   - **URL**: `http://localhost:4545/api`
+   - **TOKEN**: `!deine_tokenkey`
+
+### API Endpoints
+
+#### Authentifizierung
+
+- `POST {{URL}}/auth/register`  
+- `POST {{URL}}/auth/login`
+
+#### Tasks (Benötigt `Authorization: {{TOKEN}}` im Header)
+
+- `POST {{URL}}/tasks/:email/tasks` - Task erstellen  
+- `GET {{URL}}/tasks/:email/tasks` - Alle Tasks abrufen  
+- `GET {{URL}}/:email/tasks/:taskId` - Task per ID abrufen  
+- `POST {{URL}}/:email/tasks/:taskId` - Task aktualisieren  
+- `DELETE {{URL}}/:email/tasks/:taskId` - Task löschen  
+
+**Hinweis**: Ersetze `:email` und `:taskId` mit tatsächlichen Werten.
+
 ## 🧠 Schritt 1: Modellierung
 
 ### 📌 Use-Case-Diagramm 
@@ -1289,7 +1313,7 @@ async (req: Request, res: Response) => {
 6. **Startbefehl**:
    - Führt `npm start` beim Containerstart aus
 
-```docker
+```DockerFile
 FROM node:20
 WORKDIR /app
 COPY . ./
