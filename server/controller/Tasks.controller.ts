@@ -20,7 +20,7 @@ export class TasksController {
 
     async createTask(req: Request, res: Response) {
         try {
-            const { email } = req.params;
+            const { email } =   req["user"];
             const taskData = req.body;
 
             if (!email || !taskData.title) {
@@ -56,8 +56,8 @@ export class TasksController {
 
     async getAllTasks(req: Request, res: Response) {
         try {
-            const { email } = req.params;
-
+            const { email } =  req["user"];
+            
             if (!email) {
                 return sendResponse(res, 400, { error: "Email is required" });
             }
@@ -65,7 +65,7 @@ export class TasksController {
             const tasks = await this.userModel.getTasksForUser(email);
 
             return sendResponse(res, 200, {
-                tasks: tasks || []
+                tasks
             });
         } catch (error) {
             console.error("Get tasks error:", error);
@@ -75,7 +75,8 @@ export class TasksController {
 
     async getTaskById(req: Request, res: Response) {
         try {
-            const { email, taskId } = req.params;
+            const { taskId } = req.params;
+            const { email } =  req["user"];
 
             if (!email || !taskId) {
                 return sendResponse(res, 400, { error: "Email and task ID are required" });
@@ -98,7 +99,9 @@ export class TasksController {
 
     async updateTask(req: Request, res: Response) {
         try {
-            const { email, taskId } = req.params;
+            const {  taskId } = req.params;
+            const { email } =  req["user"];
+
             const updates = req.body;
 
             if (!email || !taskId) {
@@ -137,8 +140,8 @@ export class TasksController {
 
     async deleteTask(req: Request, res: Response) {
         try {
-            const { email, taskId } = req.params;
-
+            const {  taskId } = req.params;
+            const { email } =  req["user"];
             if (!email || !taskId) {
                 return sendResponse(res, 400, { error: "Email and task ID are required" });
             }

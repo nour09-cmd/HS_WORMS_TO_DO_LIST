@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erweiterte TODO-Liste mit Popup</title>
+    <!-- Bootstrap CSS + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .completed-task {
+            opacity: 0.7;
+            background-color: #f8f9fa;
+        }
+        .completed-task .task-title {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+        .due-date {
+            font-size: 0.9rem;
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .due-date.completed {
+            color: #28a745;
+        }
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">📝 Erweiterte TODO-Liste</h1>
+        
+        <!-- Tasks werden hier dynamisch eingefügt -->
+        <div class="row" id="taskContainer">
+            <!-- Nicht erledigt -->
+            <div class="col-md-6">
+                <h3 class="mb-3 text-danger">⚡ Nicht erledigt</h3>
+                <div id="pendingTasks"></div>
+            </div>
+            
+            <!-- Erledigt -->
+            <div class="col-md-6">
+                <h3 class="mb-3 text-success">✅ Erledigt</h3>
+                <div id="completedTasks"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating "+" Button -->
+    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+        <i class="bi bi-plus"></i>
+    </button>
+
+    <!-- Modal zum Hinzufügen von Tasks -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Neuen Task hinzufügen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="taskForm">
+                        <div class="mb-3">
+                            <label class="form-label">Titel*</label>
+                            <input type="text" class="form-control" id="taskTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Beschreibung</label>
+                            <textarea class="form-control" id="taskDescription" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fälligkeitsdatum</label>
+                            <input type="date" class="form-control" id="taskDueDate">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-primary" id="saveTaskBtn">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript für die Funktionalität -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Beispiel-Tasks (können später gelöscht werden)
+            const sampleTasks = [
+                { id: 1, title: "Projekt abschließen", description: "Präsentation vorbereiten", dueDate: "2023-12-15", isCompleted: false },
+                { id: 2, title: "Einkaufen gehen", description: "Milch, Eier, Brot", dueDate: "2023-12-10", isCompleted: false },
+                { id: 3, title: "Hausaufgaben machen", description: "Matheaufgaben erledigen", dueDate: "2023-12-05", isCompleted: true }
+            ];
+            
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || sampleTasks;
+            
+            // Tasks rendern
+            renderTasks();
+            
+            // Neuen Task speichern
+            document.getElementById('saveTaskBtn').addEventListener('click', function() {
+                const title = document.getElementById('taskTitle').value;
+                const description = document.getElementById('taskDescription').value;
+                const dueDate = document.getElementById('taskDueDate').value;
+                
+                if (!title) {
+                    alert("Bitte einen Titel eingeben!");
+                    return;
+                }
+                
+                const newTask = {
+                    id: Date.now(),
+                    title: title,
+                    description: description,
+                    dueDate: dueDate,
+                    isCompleted: false
+                };
+                
+                tasks.push(newTask);
+                saveTasks();
+                renderTasks();
+                
+                // Modal schließen & Formular zurücksetzen
+                bootstrap.Modal.getInstance(document.getElementById('addTaskModal')).hide();
+                document.getElementById('taskForm').reset();
+            });
+            
+            // Tasks im Local Storage speichern
+            function saveTasks() {
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+            
+            // Tasks anzeigen
+            function renderTasks() {
+                const pendingTasks = document.getElementById('pendingTasks');
+                const completedTasks = document.getElementById('completedTasks');
+                
+                pendingTasks.innerHTML = '';
+                completedTasks.innerHTML = '';
+                
+                tasks.forEach(task => {
+                    const taskElement = document.createElement('div');
+                    taskElement.className = `card mb-3 ${task.isCompleted ? 'completed-task' : ''}`;
+                    taskElement.innerHTML = `
+                        <div class="card-body">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input toggle-complete" type="checkbox" data-id="${task.id}" ${task.isCompleted ? 'checked' : ''}>
+                                <label class="form-check-label task-title fw-bold">${task.title}</label>
+                            </div>
+                            ${task.description ? `<p class="mb-2">${task.description}</p>` : ''}
+                            ${task.dueDate ? `<span class="due-date ${task.isCompleted ? 'completed' : ''}">
+                                📅 ${task.isCompleted ? 'Erledigt am:' : 'Fällig:'} ${task.dueDate}
+                            </span>` : ''}
+                            <button class="btn btn-sm btn-danger float-end delete-task" data-id="${task.id}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    if (task.isCompleted) {
+                        completedTasks.appendChild(taskElement);
+                    } else {
+                        pendingTasks.appendChild(taskElement);
+                    }
+                });
+                
+                // Event-Listener für Checkboxen und Löschen-Buttons
+                document.querySelectorAll('.toggle-complete').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const taskId = parseInt(this.getAttribute('data-id'));
+                        const task = tasks.find(t => t.id === taskId);
+                        task.isCompleted = this.checked;
+                        saveTasks();
+                        renderTasks();
+                    });
+                });
+                
+                document.querySelectorAll('.delete-task').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const taskId = parseInt(this.getAttribute('data-id'));
+                        tasks = tasks.filter(t => t.id !== taskId);
+                        saveTasks();
+                        renderTasks();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

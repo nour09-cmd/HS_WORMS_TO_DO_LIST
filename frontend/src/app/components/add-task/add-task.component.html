@@ -1,0 +1,31 @@
+<div class="modal-backdrop show" *ngIf="true"></div>
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Neuen Task hinzufügen</h5>
+        <button type="button" class="btn-close" (click)="onCancel()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSave()">
+          <div class="mb-3">
+            <label class="form-label">Titel*</label>
+            <input type="text" class="form-control" [(ngModel)]="task.title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Beschreibung</label>
+            <textarea class="form-control" [(ngModel)]="task.description" name="description" rows="2"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Fälligkeitsdatum</label>
+            <input type="date" class="form-control" [(ngModel)]="task.dueDate" name="dueDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Abbrechen</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>

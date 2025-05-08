@@ -1,0 +1,60 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>📝 Erweiterte TODO-Liste</h1>
+    <button class="btn btn-outline-danger" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </div>
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading && !error" class="row" id="taskContainer">
+    <!-- Nicht erledigt -->
+    <div class="col-md-6">
+      <h3 class="mb-3 text-danger">⚡ Nicht erledigt</h3>
+      <div id="pendingTasks">
+        <app-task-card
+          *ngFor="let task of pendingTasks"
+          [task]="task"
+          (toggleComplete)="onToggleComplete(task._id)"
+          (delete)="onDeleteTask(task._id)">
+        </app-task-card>
+      </div>
+    </div>
+
+    <!-- Erledigt -->
+    <div class="col-md-6">
+      <h3 class="mb-3 text-success">✅ Erledigt</h3>
+      <div id="completedTasks">
+        <app-task-card
+          *ngFor="let task of completedTasks"
+          [task]="task"
+          (toggleComplete)="onToggleComplete(task._id)"
+          (delete)="onDeleteTask(task._id)">
+        </app-task-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating "+" Button -->
+  <button class="btn btn-primary add-btn" (click)="showAddTaskDialog()">
+    <i class="bi bi-plus"></i>
+  </button>
+
+  <!-- Add Task Dialog -->
+  <app-add-task
+    *ngIf="showAddDialog"
+    (save)="onTaskSaved($event)"
+    (cancel)="onAddTaskCanceled()">
+  </app-add-task>
+</div>

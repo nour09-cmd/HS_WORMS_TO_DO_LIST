@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <!-- Login Form -->
+                <div class="card my-5" id="login-form">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="text-center">Login</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="login-email" class="form-label">Email Adresse</label>
+                                <input type="email" class="form-control" id="login-email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="login-password" class="form-label">Passwort</label>
+                                <input type="password" class="form-control" id="login-password" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="#" id="show-register">Noch keinen Account? Registrieren</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Form (hidden by default) -->
+                <div class="card my-5 d-none" id="register-form">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="text-center">Registrieren</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="register-name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="register-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="register-email" class="form-label">Email Adresse</label>
+                                <input type="email" class="form-control" id="register-email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="register-password" class="form-label">Passwort</label>
+                                <input type="password" class="form-control" id="register-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="register-confirm-password" class="form-label">Passwort bestätigen</label>
+                                <input type="password" class="form-control" id="register-confirm-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Registrieren</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="#" id="show-login">Bereits registriert? Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Toggle between login and register forms
+    document.getElementById('show-register').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('login-form').classList.add('d-none');
+        document.getElementById('register-form').classList.remove('d-none');
+    });
+
+    document.getElementById('show-login').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('register-form').classList.add('d-none');
+        document.getElementById('login-form').classList.remove('d-none');
+    });
+
+    // Simple form validation for register form
+    const registerForm = document.querySelector('#register-form form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwörter stimmen nicht überein!');
+            }
+        });
+    }
+});
+    </script>
+</body>
+</html>
+
+
+
+<div class="container py-5">
+    <h1 class="text-center mb-4">📝 Erweiterte TODO-Liste</h1>
+    <div class="row" id="taskContainer">
+      <!-- Nicht erledigt -->
+      <div class="col-md-6">
+        <h3 class="mb-3 text-danger">⚡ Nicht erledigt</h3>
+        <div id="pendingTasks">
+          <app-task-card [task]="task" ></app-task-card>
+        </div>
+      </div>
+  
+      <!-- Erledigt -->
+      <div class="col-md-6">
+        <h3 class="mb-3 text-success">✅ Erledigt</h3>
+        <div id="completedTasks">
+           <app-task-card [task]="task" ></app-task-card>
+        </div>
+      </div>
+    </div>
+  
+  
+     <!-- Floating "+" Button -->
+    <button class="btn btn-primary add-btn" (click)="showAddTaskDialog()">
+      <i class="bi bi-plus"></i>
+    </button>
+  
+    <!-- Add Task Dialog -->
+    <app-add-task
+      *ngIf="showAddDialog"
+      (save)="onTaskSaved($event)"
+      (cancel)="onAddTaskCanceled()">
+    </app-add-task>
+  </div>
+  

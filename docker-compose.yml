@@ -14,6 +14,14 @@ services:
       - mongodb
     networks:
       - app-network
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge

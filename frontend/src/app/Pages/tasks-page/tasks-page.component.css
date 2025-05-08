@@ -1,0 +1,26 @@
+.completed-task {
+  opacity: 0.7;
+  background-color: #f8f9fa;
+}
+.completed-task .task-title {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+.due-date {
+  font-size: 0.9rem;
+  color: #dc3545;
+  font-weight: bold;
+}
+.due-date.completed {
+  color: #28a745;
+}
+.add-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

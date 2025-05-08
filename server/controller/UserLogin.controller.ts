@@ -37,7 +37,7 @@ export class UserLoginController {
 
             const token = this.createToken(user.email, user.name);
             
-            return sendResponse(res, 200, {
+            return sendResponse(res, 201, {
                 token,
                 user: {
                     name: user.name,
@@ -48,6 +48,10 @@ export class UserLoginController {
             console.error("Login error:", error);
             return sendResponse(res, 500, { error: "Internal server error" });
         }
+    }
+
+    async isValidToken(req: Request, res: Response){
+        return sendResponse(res, 200,{status:true});
     }
 }
 

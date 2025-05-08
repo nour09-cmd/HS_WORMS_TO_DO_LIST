@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card my-5">
+        <div class="card-header bg-success text-white">
+          <h3 class="text-center">Registrieren</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+            <div class="mb-3">
+              <label for="register-name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="register-name"
+                formControlName="name"
+                name="name"
+                [ngClass]="{'is-invalid': registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched || submitted)}"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('name')?.invalid &&
+                  (registerForm.get('name')?.dirty ||
+                    registerForm.get('name')?.touched ||
+                    submitted)
+                "
+                class="invalid-feedback"
+              >
+                <div *ngIf="registerForm.get('name')?.errors?.['required']">
+                  Name ist erforderlich
+                </div>
+                <div *ngIf="registerForm.get('name')?.errors?.['minlength']">
+                  Name muss mindestens 3 Zeichen lang sein
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="register-email" class="form-label"
+                >Email Adresse</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="register-email"
+                formControlName="email"
+                name="email"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('email')?.invalid &&
+                    (registerForm.get('email')?.dirty ||
+                      registerForm.get('email')?.touched ||
+                      submitted)
+                }"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('email')?.invalid &&
+                  (registerForm.get('email')?.dirty ||
+                    registerForm.get('email')?.touched ||
+                    submitted)
+                "
+                class="invalid-feedback"
+              >
+                <div *ngIf="registerForm.get('email')?.errors?.['required']">
+                  Email ist erforderlich
+                </div>
+                <div *ngIf="registerForm.get('email')?.errors?.['email']">
+                  Bitte geben Sie eine gültige Email-Adresse ein
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="register-password" class="form-label">Passwort</label>
+              <input
+                type="password"
+                class="form-control"
+                id="register-password"
+                formControlName="password"
+                name="password"
+                [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('password')?.invalid &&
+                    (registerForm.get('password')?.dirty ||
+                      registerForm.get('password')?.touched ||
+                      submitted)
+                }"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('password')?.invalid &&
+                  (registerForm.get('password')?.dirty ||
+                    registerForm.get('password')?.touched ||
+                    submitted)
+                "
+                class="invalid-feedback"
+              >
+                <div *ngIf="registerForm.get('password')?.errors?.['required']">
+                  Passwort ist erforderlich
+                </div>
+                <div
+                  *ngIf="registerForm.get('password')?.errors?.['minlength']"
+                >
+                  Passwort muss mindestens 6 Zeichen lang sein
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="register-confirm-password" class="form-label"
+                >Passwort bestätigen</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="register-confirm-password"
+                formControlName="confirmPassword"
+                name="confirmPassword"
+                [ngClass]="{'is-invalid': (registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['passwordMismatch']) && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched || submitted)}"
+              />
+              <div
+                *ngIf="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['passwordMismatch']) && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched || submitted)"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="registerForm.get('confirmPassword')?.errors?.['required']"
+                >
+                  Passwortbestätigung ist erforderlich
+                </div>
+                <div *ngIf="registerForm.errors?.['passwordMismatch']">
+                  Passwörter stimmen nicht überein
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-success w-100"
+              [disabled]="registerForm.invalid && submitted"
+            >
+              Registrieren
+            </button>
+          </form>
+          <div class="text-center mt-3">
+            <a routerLink="/login">Bereits registriert? Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+          <div class="card my-5">
+              <div class="card-header bg-primary text-white">
+                  <h3 class="text-center">Login</h3>
+              </div>
+              <div class="card-body">
+                  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                      <div class="mb-3">
+                          <label for="login-email" class="form-label">Email Adresse</label>
+                          <input type="email" class="form-control" id="login-email"
+                                formControlName="email" name="email"
+                                [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)}">
+                          <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+                               class="invalid-feedback">
+                              <div *ngIf="loginForm.get('email')?.errors?.['required']">
+                                  Email ist erforderlich
+                              </div>
+                              <div *ngIf="loginForm.get('email')?.errors?.['email']">
+                                  Bitte geben Sie eine gültige Email-Adresse ein
+                              </div>
+                          </div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="login-password" class="form-label">Passwort</label>
+                          <input type="password" class="form-control" id="login-password"
+                                formControlName="password" name="password"
+                                [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)}">
+                          <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                               class="invalid-feedback">
+                              <div *ngIf="loginForm.get('password')?.errors?.['required']">
+                                  Passwort ist erforderlich
+                              </div>
+                          </div>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary w-100" [disabled]="!loginForm.valid">Login</button>
+                  </form>
+                  <div class="text-center mt-3">
+                      <a routerLink="/register">Noch keinen Account? Registrieren</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

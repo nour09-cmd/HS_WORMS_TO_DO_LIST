@@ -1,0 +1,33 @@
+<div class="card mb-3" [class.completed-task]="task.isCompleted">
+  <div class="card-body">
+    <div class="form-check form-switch mb-2">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [id]="'taskCheckbox_' + task._id"
+        [checked]="task.isCompleted"
+        (change)="onToggleComplete()">
+      <label
+        class="form-check-label task-title fw-bold"
+        [class.text-decoration-line-through]="task.isCompleted"
+        [class.text-muted]="task.isCompleted"
+        [for]="'taskCheckbox_' + task._id">
+        {{ task.title }}
+      </label>
+    </div>
+
+    @if (task.description) {
+      <p class="mb-2">{{ task.description }}</p>
+    }
+
+    @if (task.dueDate) {
+      <span [class]="dueDateClass">
+        📅 {{ task.isCompleted ? 'Erledigt am:' : 'Fällig:' }} {{ task.dueDate }}
+      </span>
+    }
+
+    <button class="btn btn-sm btn-danger float-end" (click)="onDelete()">
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
+</div>
