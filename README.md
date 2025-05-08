@@ -165,17 +165,17 @@ Für alle Aufgaben-Endpunkte muss der Header `Authorization: {{TOKEN}}` gesetzt 
 
 ### 📱 Interface
 
-Weitere Details finden Sie in der [Interface-Dokumentation](./docs/interface.md).
+Weitere Details finden Sie in der [Interface-Dokumentation](./Interface/README.md).
 
 ### 🖥️ Server
 
 Der Backend-Server wurde mit Node.js und TypeScript implementiert. 
-Detaillierte Informationen zur Server-Architektur finden Sie in der [Server-Dokumentation](./docs/server.md).
+Detaillierte Informationen zur Server-Architektur finden Sie in der [Server-Dokumentation](./server/README.md).
 
 ### 🎨 Frontend
 
 Das Frontend wurde mit Angular entwickelt und bietet eine moderne, responsive Benutzeroberfläche.
-Mehr Informationen zur Frontend-Implementierung finden Sie in der [Frontend-Dokumentation](./docs/frontend.md).
+Mehr Informationen zur Frontend-Implementierung finden Sie in der [Frontend-Dokumentation](./frontend/README.md).
 
 ### 🐳 Docker
 
